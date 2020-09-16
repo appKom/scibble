@@ -1,7 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+final Uri _authorizationUri = Uri(
+    scheme: 'https',
+    path: 'online.ntnu.no/openid/authorize',
+    queryParameters: {
+      'client_id': '457923',
+      'redirect_uri': 'http://localhost:6969/',
+      'response_type': 'code',
+    });
+
+Future<String> login() async {
+  final uri = _authorizationUri.toString();
+  if (await canLaunch(uri)) {
+    await launch(uri);
+  } else {
+    throw 'Could not launch $uri';
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -51,6 +72,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _sessionToken = '';
 
   void _incrementCounter() {
     setState(() {
@@ -60,6 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  void _setSessionToken(String sessionToken) {
+    setState(() {
+      _sessionToken = sessionToken;
     });
   }
 
@@ -97,13 +125,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            FlatButton(
+                color: Colors.amberAccent,
+                textColor: Colors.black87,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(8.0),
+                splashColor: Colors.blueAccent,
+                onPressed: () async {
+                  login();
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontSize: 20.0),
+                )),
+            Text('$_sessionToken')
           ],
         ),
       ),
