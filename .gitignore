@@ -251,3 +251,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,intellij,windows,macos,linux,visualstudiocode
 
+# Config file
+assets/cfg/app_settings.json
