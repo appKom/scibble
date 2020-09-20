@@ -1,32 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:scibble/OWAuthentication.dart';
+import 'package:global_configuration/global_configuration.dart';
 
-void main() {
+void main() async {
+  // Necessary to wait for config retrieval
+  WidgetsFlutterBinding.ensureInitialized();
+  await GlobalConfiguration().loadFromAsset("app_settings");
   runApp(MyApp());
-}
-
-final Uri _authorizationUri = Uri(
-    scheme: 'https',
-    path: 'online.ntnu.no/openid/authorize',
-    queryParameters: {
-      'client_id': '457923',
-      'redirect_uri': 'http://localhost:6969/',
-      'response_type': 'code',
-    });
-
-Future<String> login() async {
-  final uri = _authorizationUri.toString();
-  if (await canLaunch(uri)) {
-    await launch(uri);
-  } else {
-    throw 'Could not launch $uri';
-  }
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,28 +56,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String _sessionToken = '';
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  void _setSessionToken(String sessionToken) {
-    setState(() {
-      _sessionToken = sessionToken;
-    });
-  }
+  OWAuthentication _owAuthentication;
 
   @override
   Widget build(BuildContext context) {
+    _owAuthentication =
+        OWAuthentication(GlobalConfiguration().get('client_id'));
+    var code = _owAuthentication.authorizationCode();
+    if (code != null) {
+      _owAuthentication.tradeCodeForToken(code);
+    }
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -126,28 +101,24 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
-                color: Colors.amberAccent,
-                textColor: Colors.black87,
-                disabledColor: Colors.grey,
-                disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(8.0),
-                splashColor: Colors.blueAccent,
-                onPressed: () async {
-                  login();
-                },
-                child: Text(
-                  'Login',
-                  style: TextStyle(fontSize: 20.0),
-                )),
-            Text('$_sessionToken')
+              color: Colors.amberAccent,
+              textColor: Colors.black87,
+              disabledColor: Colors.grey,
+              disabledTextColor: Colors.black,
+              padding: EdgeInsets.all(8.0),
+              splashColor: Colors.blueAccent,
+              onPressed: () {
+                _owAuthentication.authenticate();
+              },
+              child: Text(
+                'Login',
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Text('$_sessionToken'),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
