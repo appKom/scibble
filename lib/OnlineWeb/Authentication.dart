@@ -4,22 +4,19 @@ import 'dart:html';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import 'package:random_string/random_string.dart';
+import 'package:scibble/OnlineWeb/User.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'Token.dart';
 
-class OWAuthentication {
+class Authentication {
   static const _authenticationBase = 'online.ntnu.no/openid';
   String _challenge;
   String _verifier;
   String _clientId;
   String _state;
-  Token _token;
 
-  Token get token => _token;
-  set token(token) => _token = token;
-
-  OWAuthentication(this._clientId) {
+  Authentication(this._clientId) {
     _verifier = window.sessionStorage['verifier'];
     if (_verifier == null) {
       _verifier = randomString(128);
@@ -83,6 +80,15 @@ class OWAuthentication {
       return Token.fromJson(json.decode(response.body));
     }
     return null;
+  }
+
+  Future<User> userInfo(String accessToken) async {
+    var response =
+        await http.get('https://online.ntnu.no/api/v1/profile/', headers: {
+      'Authorization': 'Bearer ${accessToken}',
+    });
+    var user = User.fromJson(json.decode(response.body));
+    return user;
   }
 
   Future<void> _launchUri(Uri uri) async {
