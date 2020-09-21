@@ -16,9 +16,8 @@ class OWAuthentication {
   String _state;
   Token _token;
 
-  get token => _token;
-  get challenge => _challenge;
-  get verifier => _verifier;
+  Token get token => _token;
+  set token(token) => _token = token;
 
   OWAuthentication(this._clientId) {
     _verifier = window.sessionStorage['verifier'];
@@ -26,11 +25,11 @@ class OWAuthentication {
       _verifier = randomString(128);
       window.sessionStorage['verifier'] = _verifier;
     }
-    _challenge = stringToSha256(_verifier);
+    _challenge = _stringToSha256(_verifier);
     _state = randomString(128);
   }
 
-  String stringToSha256(String string) {
+  String _stringToSha256(String string) {
     var hash = sha256.convert(utf8.encode(string));
     var cleanHash = base64Url
         .encode(hash.bytes)
@@ -63,10 +62,10 @@ class OWAuthentication {
         'scope': 'onlineweb4',
       },
     );
-    launchUri(uri);
+    _launchUri(uri);
   }
 
-  void tradeCodeForToken(String code) async {
+  Future<Token> tradeCodeForToken(String code) async {
     var response = await http.post(
       'https://$_authenticationBase/token',
       headers: <String, String>{
@@ -81,11 +80,12 @@ class OWAuthentication {
       },
     );
     if (response.statusCode == 200) {
-      _token = Token.fromJson(json.decode(response.body));
+      return Token.fromJson(json.decode(response.body));
     }
+    return null;
   }
 
-  Future<void> launchUri(Uri uri) async {
+  Future<void> _launchUri(Uri uri) async {
     final uriString = uri.toString();
     if (await canLaunch(uriString)) {
       await launch(

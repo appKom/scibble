@@ -6,6 +6,7 @@ class Token {
   final String idToken;
 
   bool get tokenIsExpired => new DateTime.now().isAfter(expiresAt);
+  String get accesstoken => accessToken;
 
   Token({
     this.accessToken,

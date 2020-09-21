@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scibble/OWAuthentication.dart';
 import 'package:global_configuration/global_configuration.dart';
+import 'package:scibble/Theme/ScibbleColor.dart';
 
 void main() async {
   // Necessary to wait for config retrieval
@@ -9,13 +11,21 @@ void main() async {
   runApp(MyApp());
 }
 
+void getToken(OWAuthentication owAuth) async {
+  var code = owAuth.authorizationCode();
+  if (code != null) {
+    var token = await owAuth.tradeCodeForToken(code);
+    owAuth.token = token;
+  }
+}
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Scibble',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,13 +36,13 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Scibble login'),
     );
   }
 }
@@ -56,17 +66,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _sessionToken = '';
   OWAuthentication _owAuthentication;
 
   @override
   Widget build(BuildContext context) {
     _owAuthentication =
         OWAuthentication(GlobalConfiguration().get('client_id'));
-    var code = _owAuthentication.authorizationCode();
-    if (code != null) {
-      _owAuthentication.tradeCodeForToken(code);
-    }
+    getToken(_owAuthentication);
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -101,21 +107,32 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
-              color: Colors.amberAccent,
-              textColor: Colors.black87,
-              disabledColor: Colors.grey,
-              disabledTextColor: Colors.black,
-              padding: EdgeInsets.all(8.0),
-              splashColor: Colors.blueAccent,
+              color: ScibbleColor.onlineBlue,
+              textColor: Colors.white,
+              splashColor: ScibbleColor.onlineOrange,
+              padding: EdgeInsets.all(15.0),
               onPressed: () {
                 _owAuthentication.authenticate();
               },
-              child: Text(
-                'Login',
-                style: TextStyle(fontSize: 20.0),
+              child: Container(
+                width: 230,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'images/Online_hvit_o.png',
+                      height: 30,
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Text(
+                      'Login gjennom Online',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Text('$_sessionToken'),
           ],
         ),
       ),
