@@ -9,7 +9,14 @@ class HamburgerMenu extends StatelessWidget {
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
       child: ListView(
+        padding: EdgeInsets.zero,
         children: <Widget>[
+          DrawerHeader(
+              child: Text('List'),
+              decoration: BoxDecoration(
+                color: Colors.blue
+              ),
+          ),
           ListTile(
             title: Text('Scan'),
             onTap: () {
