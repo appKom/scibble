@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
-import 'package:scibble/OnlineWeb/Token.dart';
-import 'package:scibble/OnlineWeb/User.dart';
+import 'package:scibble/Store/AppState.dart';
 
-class Home extends StatefulWidget {
-  Home({Key key, this.user, this.token}) : super(key: key);
-
-  final User user;
-  final Token token;
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text('Last name: ${widget.user.lastName}'),
-          Text('Acess token: ${widget.token.accessToken}'),
-        ],
+      body: StoreConnector<AppState, Store<AppState>>(
+        converter: (store) => store,
+        builder: (context, store) {
+          print('building home');
+          return Column(
+            children: [
+              Text('Last name: ${store.state.user.lastName}'),
+              Text('Acess token: ${store.state.token.accessToken}'),
+            ],
+          );
+        },
       ),
     );
   }
