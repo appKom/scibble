@@ -5,18 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
-import 'package:scibble/Store/Actions.dart';
-import 'package:scibble/Store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class OnlineView extends StatefulWidget {
-  OnlineView({Key key}) : super(key: key);
+import 'package:scibble/redux/authentication/actions.dart';
+import 'package:scibble/redux/store.dart';
+
+class OnlineWeb extends StatefulWidget {
+  OnlineWeb({Key key}) : super(key: key);
 
   @override
-  _OnlineViewState createState() => _OnlineViewState();
+  _OnlineWebState createState() => _OnlineWebState();
 }
 
-class _OnlineViewState extends State<OnlineView> {
+class _OnlineWebState extends State<OnlineWeb> {
   @override
   void initState() {
     super.initState();
@@ -30,13 +31,14 @@ class _OnlineViewState extends State<OnlineView> {
       body: StoreConnector<AppState, Store<AppState>>(
         converter: (store) => store,
         builder: (context, store) {
+          final pkce = store.state.auth.authPKCEState.pkce;
           return WebView(
-            initialUrl: store.state.auth.authenticateUrl,
+            initialUrl: pkce.authenticateUrl,
             navigationDelegate: (NavigationRequest request) {
               Uri responseUri = Uri.parse(request.url);
               String code = responseUri.queryParameters['code'];
               if (code != null) {
-                store.state.auth.code = code;
+                pkce.code = code;
                 tradeCodeForToken(store);
                 store.dispatch(NavigateToAction.pop());
                 return NavigationDecision.prevent;

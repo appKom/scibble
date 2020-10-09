@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:random_string/random_string.dart';
 
-class Authentication {
+class AuthPKCE {
   String _challenge;
   String _verifier;
   String _clientId;
@@ -26,7 +26,7 @@ class Authentication {
         },
       ).toString();
 
-  Authentication(this._clientId) {
+  AuthPKCE(this._clientId) {
     _verifier = randomString(128);
     _challenge = _stringToSha256(_verifier);
     _state = randomString(128);

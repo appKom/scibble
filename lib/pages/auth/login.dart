@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
-import 'package:scibble/Store/Actions.dart';
 
-import 'package:scibble/Store/AppState.dart';
-import 'package:scibble/Theme/ScibbleColor.dart';
+import 'package:scibble/redux/authentication/actions.dart';
+import 'package:scibble/redux/store.dart';
+import 'package:scibble/theme/scibble_color.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -21,13 +21,13 @@ class _LoginState extends State<Login> {
       body: StoreConnector<AppState, Store<AppState>>(
         converter: (store) => store,
         onDidChange: (store) {
-          final state = store.state;
-          if (state.token != null && state.user == null) {
+          final state = store.state.auth;
+          if (state.tokenState.token != null && state.userState.user == null) {
             getUserProfile(store);
           }
         },
         builder: (context, store) {
-          final state = store.state;
+          final token = store.state.auth.tokenState.token;
           return Center(
             child: Column(
               children: [
@@ -41,9 +41,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Spacer(flex: 1),
-                state.token == null
-                    ? LoginButton()
-                    : CircularProgressIndicator(),
+                token == null ? LoginButton() : CircularProgressIndicator(),
                 Spacer(flex: 1),
               ],
             ),
@@ -68,7 +66,7 @@ class LoginButton extends StatelessWidget {
           splashColor: ScibbleColor.onlineOrange,
           padding: EdgeInsets.all(15.0),
           onPressed: () {
-            if (store.state.auth.code == null) {
+            if (store.state.auth.authPKCEState.pkce.code == null) {
               store.dispatch(NavigateToAction.push('/login/online'));
             }
             return null;
