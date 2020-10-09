@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/widgets/hamburger.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -10,13 +12,18 @@ class Home extends StatelessWidget {
       body: StoreConnector<AppState, Store<AppState>>(
         converter: (store) => store,
         builder: (context, store) {
-          print('building home');
-          return Column(
-            children: [
-              Text('Last name: ${store.state.auth.userState.user.lastName}'),
-              Text(
-                  'Acess token: ${store.state.auth.tokenState.token.accessToken}'),
-            ],
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Scibble'),
+            ),
+            body: Column(
+              children: [
+                Text('Last name: ${store.state.auth.userState.user.lastName}'),
+                Text(
+                    'Acess token: ${store.state.auth.tokenState.token.accessToken}'),
+              ],
+            ),
+            drawer: HamburgerMenu(),
           );
         },
       ),
