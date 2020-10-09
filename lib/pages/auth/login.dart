@@ -60,17 +60,16 @@ class LoginButton extends StatelessWidget {
     return StoreConnector<AppState, Store<AppState>>(
       converter: (store) => store,
       builder: (context, store) {
+        final code = store.state.auth.authPKCEState.pkce.code;
         return (FlatButton(
           color: ScibbleColor.onlineBlue,
           textColor: Colors.white,
           splashColor: ScibbleColor.onlineOrange,
+          disabledColor: ScibbleColor.onlineBlueDisabled,
           padding: EdgeInsets.all(15.0),
-          onPressed: () {
-            if (store.state.auth.authPKCEState.pkce.code == null) {
-              store.dispatch(NavigateToAction.push('/login/online'));
-            }
-            return null;
-          },
+          onPressed: code == null
+              ? () => store.dispatch(NavigateToAction.push('/login/online'))
+              : null,
           child: Container(
             width: 260,
             child: Row(
