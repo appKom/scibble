@@ -6,21 +6,18 @@ import 'package:scibble/models/user.dart';
 @immutable
 class AuthPKCEState {
   final AuthPKCE pkce;
-
   const AuthPKCEState({@required this.pkce});
 }
 
 @immutable
 class TokenState {
   final Token token;
-
   const TokenState({@required this.token});
 }
 
 @immutable
 class UserState {
   final User user;
-
   const UserState({@required this.user});
 }
 

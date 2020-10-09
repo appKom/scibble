@@ -70,23 +70,21 @@ class LoginButton extends StatelessWidget {
           onPressed: code == null
               ? () => store.dispatch(NavigateToAction.push('/login/online'))
               : null,
-          child: Container(
-            width: 260,
-            child: Row(
-              children: [
-                Image.asset(
-                  'assets/images/Online_hvit_o.png',
-                  height: 30,
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  'Logg in gjennom Online',
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/Online_hvit_o.png',
+                height: 30,
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Text(
+                  'Logg inn gjennom Online',
                   style: TextStyle(fontSize: 20.0),
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ));
       },
