@@ -1,13 +1,20 @@
 import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/authentication/state.dart';
+import 'package:scibble/redux/store.dart';
 
 AuthenticationState authenticationReducer(
-        AuthenticationState state, dynamic action) =>
-    new AuthenticationState(
+    AuthenticationState state, dynamic action) {
+  if (action is Logout) {
+    return new AuthenticationState.initialState(
+        state.authPKCEState.pkce.clientId);
+  } else {
+    return new AuthenticationState(
       userState: userReducer(state.userState, action),
       tokenState: tokenReducer(state.tokenState, action),
       authPKCEState: authPKCEReducer(state.authPKCEState, action),
     );
+  }
+}
 
 UserState userReducer(UserState prevState, dynamic action) {
   if (action is SetUser) {

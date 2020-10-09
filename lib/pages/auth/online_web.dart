@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
+import 'package:scibble/theme/scibble_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:scibble/redux/authentication/actions.dart';
@@ -27,7 +28,10 @@ class _OnlineWebState extends State<OnlineWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Logg inn'),
+        backgroundColor: ScibbleColor.onlineOrange,
+      ),
       body: StoreConnector<AppState, Store<AppState>>(
         converter: (store) => store,
         builder: (context, store) {

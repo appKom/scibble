@@ -12,7 +12,7 @@ import 'package:scibble/redux/store.dart';
 
 class SetAuthPKCE {
   AuthPKCE payload;
-  // SetAuthentication(this.payload);
+  SetAuthPKCE(this.payload);
 }
 
 class SetToken {

@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/theme/scibble_color.dart';
 import 'package:scibble/widgets/hamburger.dart';
 
 class Home extends StatelessWidget {
@@ -14,13 +15,18 @@ class Home extends StatelessWidget {
         builder: (context, store) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Scibble'),
+              title: Text('Sidetittel'),
+              backgroundColor: ScibbleColor.onlineOrange,
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () => logoutUser(store))
+              ],
             ),
             body: Column(
               children: [
-                Text('Last name: ${store.state.auth.userState.user.lastName}'),
                 Text(
-                    'Acess token: ${store.state.auth.tokenState.token.accessToken}'),
+                    'Last name: ${store.state.auth.userState.user.toJson() ?? 'no user'}'),
               ],
             ),
             drawer: HamburgerMenu(),
