@@ -1,4 +1,5 @@
 class User {
+  int id;
   String firstName;
   String lastName;
   String username;
@@ -32,7 +33,8 @@ class User {
   bool hasExpiringMembership;
 
   User(
-      {this.firstName,
+      {this.id,
+      this.firstName,
       this.lastName,
       this.username,
       this.nickname,
@@ -65,6 +67,7 @@ class User {
       this.hasExpiringMembership});
 
   User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     username = json['username'];
@@ -110,6 +113,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['first_name'] = this.firstName;
     data['last_name'] = this.lastName;
     data['username'] = this.username;

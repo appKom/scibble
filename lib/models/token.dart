@@ -5,7 +5,7 @@ class Token {
   final DateTime expiresAt;
   final String idToken;
 
-  bool get tokenIsExpired => new DateTime.now().isAfter(expiresAt);
+  bool get isExpired => new DateTime.now().isAfter(expiresAt);
   String get accesstoken => accessToken;
 
   Token({
