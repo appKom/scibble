@@ -6,7 +6,8 @@ import 'package:scibble/models/user.dart';
 @immutable
 class AuthPKCEState {
   final AuthPKCE pkce;
-  const AuthPKCEState({@required this.pkce});
+  final String code;
+  const AuthPKCEState({@required this.pkce, this.code});
 }
 
 @immutable
