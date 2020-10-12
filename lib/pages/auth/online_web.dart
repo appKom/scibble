@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:redux/redux.dart';
+import 'package:scibble/models/auth_pkce.dart';
 import 'package:scibble/theme/scibble_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

@@ -33,6 +33,8 @@ TokenState tokenReducer(TokenState prevState, dynamic action) {
 AuthPKCEState authPKCEReducer(AuthPKCEState prevState, dynamic action) {
   if (action is SetAuthPKCE) {
     return new AuthPKCEState(pkce: action.payload);
+  } else if (action is SetCode) {
+    return new AuthPKCEState(pkce: prevState.pkce, code: action.payload);
   }
   return prevState;
 }
