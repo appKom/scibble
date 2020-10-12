@@ -32,19 +32,23 @@ class _OnlineWebState extends State<OnlineWeb> {
         title: Text('Logg inn'),
         backgroundColor: ScibbleColor.onlineOrange,
       ),
-      body: StoreConnector<AppState, Store<AppState>>(
-        converter: (store) => store,
-        builder: (context, store) {
-          final pkce = store.state.auth.authPKCEState.pkce;
+      body: StoreConnector<AppState, _OnlineWebViewModel>(
+        converter: (store) => _OnlineWebViewModel(
+          pkce: store.state.auth.authPKCEState.pkce,
+          tradeCodeForToken: (code) {
+            store.dispatch(SetCode(code));
+            tradeCodeForToken(store);
+            store.dispatch(NavigateToAction.pop());
+          },
+        ),
+        builder: (context, vm) {
           return WebView(
-            initialUrl: pkce.authenticateUrl,
+            initialUrl: vm.pkce.authenticateUrl,
             navigationDelegate: (NavigationRequest request) {
               Uri responseUri = Uri.parse(request.url);
               String code = responseUri.queryParameters['code'];
               if (code != null) {
-                pkce.code = code;
-                tradeCodeForToken(store);
-                store.dispatch(NavigateToAction.pop());
+                vm.tradeCodeForToken(code);
                 return NavigationDecision.prevent;
               }
               return NavigationDecision.navigate;
@@ -54,4 +58,11 @@ class _OnlineWebState extends State<OnlineWeb> {
       ),
     );
   }
+}
+
+class _OnlineWebViewModel {
+  AuthPKCE pkce;
+  void Function(String code) tradeCodeForToken;
+
+  _OnlineWebViewModel({this.pkce, this.tradeCodeForToken});
 }
