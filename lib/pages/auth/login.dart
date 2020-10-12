@@ -3,8 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 
-import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/theme/scibble_color.dart';
 
 class Login extends StatefulWidget {
@@ -21,13 +21,13 @@ class _LoginState extends State<Login> {
       body: StoreConnector<AppState, Store<AppState>>(
         converter: (store) => store,
         onDidChange: (store) {
-          final state = store.state.auth;
-          if (state.tokenState.token != null && state.userState.user == null) {
+          final state = store.state;
+          if (state.auth.token != null && state.user == null) {
             getUserProfile(store);
           }
         },
         builder: (context, store) {
-          final token = store.state.auth.tokenState.token;
+          final token = store.state.auth.token;
           return Center(
             child: Column(
               children: [

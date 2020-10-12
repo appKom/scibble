@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
-import 'package:scibble/redux/authentication/Reducer.dart';
+
+import 'package:scibble/models/user.dart';
+import 'package:scibble/redux/authentication/reducer.dart';
 import 'package:scibble/redux/authentication/state.dart';
+import 'package:scibble/redux/user/actions.dart';
+import 'package:scibble/redux/user/reducer.dart';
 
 class AppState {
   final AuthenticationState auth;
+  final User user;
 
-  AppState({@required this.auth});
+  AppState({@required this.auth, @required this.user});
 
   factory AppState.initialState(String clientId) => AppState(
         auth: AuthenticationState.initialState(clientId),
+        user: null,
       );
 }
 
-class Logout {
-  Logout();
+AppState reducer(AppState state, dynamic action) {
+  if (action is Logout) {
+    return new AppState.initialState(state.auth.authPKCEState.pkce.clientId);
+  }
+  return new AppState(
+    auth: authenticationReducer(state.auth, action),
+    user: userReducer(state.user, action),
+  );
 }
-
-ThunkAction<AppState> logoutUser = (Store<AppState> store) async {
-  await store.dispatch(NavigateToAction.pushNamedAndRemoveUntil(
-      '/', (route) => route.settings.name == '/'));
-  await store.dispatch(Logout());
-};
-
-AppState reducer(AppState state, dynamic action) => new AppState(
-      auth: authenticationReducer(state.auth, action),
-    );
