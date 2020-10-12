@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+
 import 'package:scibble/pages/barcode.dart';
 import 'package:scibble/pages/inventory.dart';
-
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/theme/scibble_color.dart';
 import 'package:scibble/widgets/hamburger.dart';
 
