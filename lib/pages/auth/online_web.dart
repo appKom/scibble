@@ -19,6 +19,8 @@ class OnlineWeb extends StatefulWidget {
 }
 
 class _OnlineWebState extends State<OnlineWeb> {
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -42,17 +44,23 @@ class _OnlineWebState extends State<OnlineWeb> {
           },
         ),
         builder: (context, vm) {
-          return WebView(
-            initialUrl: vm.pkce.authenticateUrl,
-            navigationDelegate: (NavigationRequest request) {
-              Uri responseUri = Uri.parse(request.url);
-              String code = responseUri.queryParameters['code'];
-              if (code != null) {
-                vm.tradeCodeForToken(code);
-                return NavigationDecision.prevent;
-              }
-              return NavigationDecision.navigate;
-            },
+          return Stack(
+            children: [
+              WebView(
+                initialUrl: vm.pkce.authenticateUrl,
+                onPageFinished: (url) => setState(() => _isLoading = false),
+                navigationDelegate: (NavigationRequest request) {
+                  Uri responseUri = Uri.parse(request.url);
+                  String code = responseUri.queryParameters['code'];
+                  if (code != null) {
+                    vm.tradeCodeForToken(code);
+                    return NavigationDecision.prevent;
+                  }
+                  return NavigationDecision.navigate;
+                },
+              ),
+              _isLoading ? Center(child: CircularProgressIndicator()) : Stack(),
+            ],
           );
         },
       ),
@@ -62,7 +70,7 @@ class _OnlineWebState extends State<OnlineWeb> {
 
 class _OnlineWebViewModel {
   AuthPKCE pkce;
-  void Function(String code) tradeCodeForToken;
+  void Function(String) tradeCodeForToken;
 
   _OnlineWebViewModel({this.pkce, this.tradeCodeForToken});
 }
