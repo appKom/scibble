@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:scibble/models/auth_pkce.dart';
+
+import 'package:redux/redux.dart';
 import 'package:scibble/theme/scibble_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -42,7 +43,7 @@ class _OnlineWebState extends State<OnlineWeb> {
               Uri responseUri = Uri.parse(request.url);
               String code = responseUri.queryParameters['code'];
               if (code != null) {
-                pkce.code = code;
+                store.dispatch(SetCode(code));
                 tradeCodeForToken(store);
                 store.dispatch(NavigateToAction.pop());
                 return NavigationDecision.prevent;
