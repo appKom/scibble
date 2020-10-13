@@ -4,21 +4,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:redux/redux.dart';
-import 'package:scibble/theme/scibble_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'package:scibble/models/auth_pkce.dart';
+import 'package:scibble/theme/scibble_color.dart';
 import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/store.dart';
 
-class OnlineWeb extends StatefulWidget {
-  OnlineWeb({Key key}) : super(key: key);
-
+class OnlineLogin extends StatelessWidget {
   @override
-  _OnlineWebState createState() => _OnlineWebState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Logg inn'),
+        backgroundColor: ScibbleColor.onlineOrange,
+      ),
+      body: StoreConnector<AppState, _OnlineLoginViewModel>(
+        converter: (store) => _OnlineLoginViewModel(
+          pkce: store.state.auth.authPKCEState.pkce,
+          tradeCodeForToken: (code) {
+            store.state.auth.authPKCEState.pkce.code = code;
+            tradeCodeForToken(store);
+            store.dispatch(NavigateToAction.pop());
+          },
+        ),
+        builder: (_, vm) => OnlineLoginViewModel(vm: vm),
+      ),
+    );
+  }
 }
 
-class _OnlineWebState extends State<OnlineWeb> {
+class OnlineLoginViewModel extends StatefulWidget {
+  final _OnlineLoginViewModel vm;
+  OnlineLoginViewModel({Key key, this.vm}) : super(key: key);
+
+  @override
+  _OnlineWebLoginState createState() => _OnlineWebLoginState(vm);
+}
+
+class _OnlineWebLoginState extends State<OnlineLoginViewModel> {
+  final _OnlineLoginViewModel vm;
+  bool _isLoading = true;
+
+  _OnlineWebLoginState(this.vm);
+
   @override
   void initState() {
     super.initState();
@@ -27,31 +56,32 @@ class _OnlineWebState extends State<OnlineWeb> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Logg inn'),
-        backgroundColor: ScibbleColor.onlineOrange,
-      ),
-      body: StoreConnector<AppState, Store<AppState>>(
-        converter: (store) => store,
-        builder: (context, store) {
-          final pkce = store.state.auth.authPKCEState.pkce;
-          return WebView(
-            initialUrl: pkce.authenticateUrl,
-            navigationDelegate: (NavigationRequest request) {
-              Uri responseUri = Uri.parse(request.url);
-              String code = responseUri.queryParameters['code'];
-              if (code != null) {
-                pkce.code = code;
-                tradeCodeForToken(store);
-                store.dispatch(NavigateToAction.pop());
-                return NavigationDecision.prevent;
-              }
-              return NavigationDecision.navigate;
-            },
-          );
-        },
-      ),
+    final spinnerWidget =
+        _isLoading ? Center(child: CircularProgressIndicator()) : Stack();
+    return Stack(
+      children: [
+        WebView(
+          initialUrl: vm.pkce.authenticateUrl,
+          onPageFinished: (url) => setState(() => _isLoading = false),
+          navigationDelegate: (NavigationRequest request) {
+            Uri responseUri = Uri.parse(request.url);
+            String code = responseUri.queryParameters['code'];
+            if (code != null) {
+              vm.tradeCodeForToken(code);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+        spinnerWidget,
+      ],
     );
   }
+}
+
+class _OnlineLoginViewModel {
+  AuthPKCE pkce;
+  void Function(String) tradeCodeForToken;
+
+  _OnlineLoginViewModel({this.pkce, this.tradeCodeForToken});
 }
