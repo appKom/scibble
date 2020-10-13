@@ -10,31 +10,20 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ScibbleAppBar(),
-        drawer: HamburgerMenu(),
-        body: StoreConnector<AppState, _HomeViewModel>(
-          converter: (store) => _HomeViewModel(
-              append: () => store.dispatch(NavigateToAction.push('/home'))),
-          builder: (_, vm) => HomeViewModel(vm),
-        ));
-  }
-}
-
-class HomeViewModel extends StatelessWidget {
-  HomeViewModel(this._vm);
-  final _HomeViewModel _vm;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FlatButton(onPressed: _vm.append, child: Text('Press me')),
-      ],
+      appBar: ScibbleAppBar(),
+      drawer: HamburgerMenu(),
+      body: HomeViewModel(),
     );
   }
 }
 
-class _HomeViewModel {
-  void Function() append;
-  _HomeViewModel({this.append});
+class HomeViewModel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('This is home'),
+      ],
+    );
+  }
 }
