@@ -60,7 +60,7 @@ class LoginButton extends StatelessWidget {
     return StoreConnector<AppState, Store<AppState>>(
       converter: (store) => store,
       builder: (context, store) {
-        final code = store.state.auth.authPKCEState.code;
+        final code = store.state.auth.authPKCEState.pkce.code;
         return (FlatButton(
           color: ScibbleColor.onlineBlue,
           textColor: Colors.white,

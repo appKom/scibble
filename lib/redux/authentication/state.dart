@@ -5,8 +5,7 @@ import 'package:scibble/models/token.dart';
 @immutable
 class AuthPKCEState {
   final AuthPKCE pkce;
-  final String code;
-  const AuthPKCEState({@required this.pkce, this.code});
+  const AuthPKCEState({@required this.pkce});
 }
 
 class AuthenticationState {

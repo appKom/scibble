@@ -13,18 +13,13 @@ class SetAuthPKCE {
   SetAuthPKCE(this.payload);
 }
 
-class SetCode {
-  String payload;
-  SetCode(this.payload);
-}
-
 class SetToken {
   final Token payload;
   SetToken(this.payload);
 }
 
 ThunkAction<AppState> tradeCodeForToken = (Store<AppState> store) async {
-  final state = store.state.auth.authPKCEState;
+  final auth = store.state.auth.authPKCEState.pkce;
   var response = await http.post(
     'https://online.ntnu.no/openid/token',
     headers: <String, String>{
@@ -32,10 +27,10 @@ ThunkAction<AppState> tradeCodeForToken = (Store<AppState> store) async {
     },
     body: {
       'grant_type': 'authorization_code',
-      'code': state.code,
+      'code': auth.code,
       'redirect_uri': 'http://localhost:6969/#/',
-      'client_id': state.pkce.clientId,
-      'code_verifier': state.pkce.verifier,
+      'client_id': auth.clientId,
+      'code_verifier': auth.verifier,
     },
   );
   if (response.statusCode == 200) {
