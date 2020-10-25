@@ -1,31 +1,18 @@
+import 'package:scibble/models/token.dart';
 import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/authentication/state.dart';
-import 'package:scibble/redux/store.dart';
 
 AuthenticationState authenticationReducer(
     AuthenticationState state, dynamic action) {
-  if (action is Logout) {
-    return new AuthenticationState.initialState(
-        state.authPKCEState.pkce.clientId);
-  } else {
-    return new AuthenticationState(
-      userState: userReducer(state.userState, action),
-      tokenState: tokenReducer(state.tokenState, action),
-      authPKCEState: authPKCEReducer(state.authPKCEState, action),
-    );
-  }
+  return new AuthenticationState(
+    token: tokenReducer(state.token, action),
+    authPKCEState: authPKCEReducer(state.authPKCEState, action),
+  );
 }
 
-UserState userReducer(UserState prevState, dynamic action) {
-  if (action is SetUser) {
-    return new UserState(user: action.payload);
-  }
-  return prevState;
-}
-
-TokenState tokenReducer(TokenState prevState, dynamic action) {
+Token tokenReducer(Token prevState, dynamic action) {
   if (action is SetToken) {
-    return new TokenState(token: action.payload);
+    return action.payload;
   }
   return prevState;
 }
@@ -33,6 +20,8 @@ TokenState tokenReducer(TokenState prevState, dynamic action) {
 AuthPKCEState authPKCEReducer(AuthPKCEState prevState, dynamic action) {
   if (action is SetAuthPKCE) {
     return new AuthPKCEState(pkce: action.payload);
+  } else if (action is SetCode) {
+    return new AuthPKCEState(pkce: prevState.pkce, code: action.payload);
   }
   return prevState;
 }

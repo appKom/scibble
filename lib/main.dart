@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 import 'package:scibble/pages/auth/login.dart';
-import 'package:scibble/pages/auth/online_web.dart';
+import 'package:scibble/pages/auth/online_login.dart';
 import 'package:scibble/pages/home.dart';
 import 'package:scibble/redux/store.dart';
 
@@ -41,7 +41,7 @@ class Scibble extends StatelessWidget {
         navigatorKey: NavigatorHolder.navigatorKey,
         routes: {
           '/': (context) => Login(),
-          '/login/online': (context) => OnlineWeb(),
+          '/login/online': (context) => OnlineLogin(),
           '/home': (context) => Home(),
         },
       ),
