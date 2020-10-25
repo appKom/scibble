@@ -8,7 +8,6 @@ class AuthPKCE {
   String _verifier;
   String _clientId;
   String _state;
-  String code;
 
   String get clientId => _clientId;
   String get verifier => _verifier;
