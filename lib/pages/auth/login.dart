@@ -5,7 +5,6 @@ import 'package:scibble/models/token.dart';
 
 import 'package:scibble/redux/store.dart';
 import 'package:scibble/redux/user/actions.dart';
-import 'package:scibble/redux/store.dart';
 import 'package:scibble/widgets/button.dart';
 
 class Login extends StatelessWidget {
