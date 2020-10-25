@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
+import 'package:scibble/widgets/scibble_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:scibble/models/auth_pkce.dart';
@@ -15,10 +16,7 @@ class OnlineLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Logg inn'),
-        backgroundColor: ScibbleColor.onlineOrange,
-      ),
+      appBar: ScibbleAppBar(title: "Logg inn"),
       body: StoreConnector<AppState, _OnlineLoginViewModel>(
         converter: (store) => _OnlineLoginViewModel(
           pkce: store.state.auth.authPKCEState.pkce,
