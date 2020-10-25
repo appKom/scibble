@@ -12,7 +12,6 @@ class SetInventory {
   SetInventory(this.payload);
 }
 
-
 ThunkAction<AppState> getInventory = (Store<AppState> store) async {
   final token = store.state.auth.token;
   var response = await http.get(
@@ -20,6 +19,7 @@ ThunkAction<AppState> getInventory = (Store<AppState> store) async {
     headers: {'Authorization': 'Bearer ${token.accessToken}'},
   );
   List jsonArray = json.decode(response.body);
-  List<Product> inventory = jsonArray.map((product) => Product.fromJson(product));
+  List<Product> inventory =
+      jsonArray.map((product) => Product.fromJson(product));
   await store.dispatch(SetInventory(inventory));
 };

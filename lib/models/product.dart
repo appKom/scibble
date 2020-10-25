@@ -19,7 +19,8 @@ class Product {
     name = json['name'];
     price = json['price'];
     description = json['description'];
-    image = json['image'] != null ? new ProductImage.fromJson(json['image']) : null;
+    image =
+        json['image'] != null ? new ProductImage.fromJson(json['image']) : null;
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;

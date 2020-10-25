@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
 import 'package:scibble/models/product.dart';
 import 'package:scibble/models/user.dart';
 import 'package:scibble/redux/authentication/reducer.dart';
@@ -16,13 +13,13 @@ class AppState {
   final List<Product> inventory;
   final User user;
 
-  AppState({@required this.auth, @required this.inventory, @required this.user});
+  AppState(
+      {@required this.auth, @required this.inventory, @required this.user});
 
   factory AppState.initialState(String clientId) => AppState(
-        auth: AuthenticationState.initialState(clientId),
-        inventory: null,
-        user: null
-      );
+      auth: AuthenticationState.initialState(clientId),
+      inventory: null,
+      user: null);
 }
 
 AppState reducer(AppState state, dynamic action) {
@@ -30,8 +27,7 @@ AppState reducer(AppState state, dynamic action) {
     return new AppState.initialState(state.auth.authPKCEState.pkce.clientId);
   }
   return new AppState(
-    auth: authenticationReducer(state.auth, action),
-    user: userReducer(state.user, action),
-    inventory: inventoryReducer(state.inventory, action)
-  );
+      auth: authenticationReducer(state.auth, action),
+      user: userReducer(state.user, action),
+      inventory: inventoryReducer(state.inventory, action));
 }
