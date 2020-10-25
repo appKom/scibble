@@ -18,8 +18,8 @@ ThunkAction<AppState> getInventory = (Store<AppState> store) async {
     'https://online.ntnu.no/api/v1/inventory/',
     headers: {'Authorization': 'Bearer ${token.accessToken}'},
   );
-  List jsonArray = json.decode(response.body);
-  List<Product> inventory =
-      jsonArray.map((product) => Product.fromJson(product));
+  final List jsonArray = json.decode(response.body);
+  final List<Product> inventory =
+      jsonArray.map((product) => Product.fromJson(product)).toList();
   await store.dispatch(SetInventory(inventory));
 };
