@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:scibble/redux/authentication/Reducer.dart';
+import 'package:scibble/redux/authentication/reducer.dart';
 import 'package:scibble/redux/authentication/state.dart';
 
 class AppState {
