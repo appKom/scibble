@@ -14,7 +14,7 @@ class SetInventory {
 
 
 ThunkAction<AppState> getInventory = (Store<AppState> store) async {
-  final token = store.state.auth.tokenState.token;
+  final token = store.state.auth.token;
   var response = await http.get(
     'https://online.ntnu.no/api/v1/inventory/',
     headers: {'Authorization': 'Bearer ${token.accessToken}'},
