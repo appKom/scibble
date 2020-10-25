@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-
 import 'package:scibble/models/token.dart';
-import 'package:scibble/redux/authentication/actions.dart';
+
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/widgets/button.dart';
 
 class Login extends StatelessWidget {
@@ -13,12 +13,11 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: StoreConnector<AppState, _LoginViewModel>(
         converter: (store) => _LoginViewModel(
-            token: store.state.auth.tokenState.token,
-            code: store.state.auth.authPKCEState.pkce.code,
+            token: store.state.auth.token,
+            code: store.state.auth.authPKCEState.code,
             getProfile: () {
-              final state = store.state.auth;
-              if (state.tokenState.token != null &&
-                  state.userState.user == null) {
+              final state = store.state;
+              if (state.auth.token != null && state.user == null) {
                 getUserProfile(store);
               }
             },

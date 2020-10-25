@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:scibble/redux/store.dart';
+import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/theme/scibble_color.dart';
 
 class ScibbleAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,7 +17,7 @@ class ScibbleAppBar extends StatelessWidget implements PreferredSizeWidget {
     return StoreConnector<AppState, _ScibbleAppBarViewModel>(
       converter: (store) => _ScibbleAppBarViewModel(
         logout: () => logoutUser(store),
-        isLoggedIn: store.state.auth.userState.user != null,
+        isLoggedIn: store.state.user != null,
       ),
       builder: (_, vm) => ScibbleAppBarViewModel(vm, title),
     );

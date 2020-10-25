@@ -23,7 +23,7 @@ class OnlineLogin extends StatelessWidget {
         converter: (store) => _OnlineLoginViewModel(
           pkce: store.state.auth.authPKCEState.pkce,
           tradeCodeForToken: (code) {
-            store.state.auth.authPKCEState.pkce.code = code;
+            store.dispatch(SetCode(code));
             tradeCodeForToken(store);
             store.dispatch(NavigateToAction.pop());
           },
