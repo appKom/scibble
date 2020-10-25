@@ -22,11 +22,11 @@ class _HomeViewModel extends State<Home> {
       drawer: HamburgerMenu(),
       body: _content[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: ScibbleColor.onlineBlue,
+        backgroundColor: Colors.white,
         onTap: (index) => setState(() => _selectedIndex = index),
         currentIndex: _selectedIndex,
         selectedItemColor: ScibbleColor.onlineOrange,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Colors.black,
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.list_alt_outlined),
