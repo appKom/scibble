@@ -4,21 +4,18 @@ import 'package:scibble/models/product.dart';
 import 'package:scibble/redux/inventory/actions.dart';
 import 'package:scibble/redux/store.dart';
 import 'package:scibble/theme/scibble_color.dart';
-import 'package:scibble/widgets/hamburger.dart';
-import 'package:scibble/widgets/scibble_app_bar.dart';
 
 class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: ScibbleAppBar(),
-        drawer: HamburgerMenu(),
-        body: StoreConnector<AppState, _InventoryViewModel>(
-          converter: (store) => _InventoryViewModel(store.state.inventory,
-              getInventory: store.dispatch(getInventory(store))),
-          builder: (_, viewModel) => InventoryViewModel(),
-          onInit: (store) => store.dispatch(getInventory(store)),
-        ));
+    return StoreConnector<AppState, _InventoryViewModel>(
+      converter: (store) => _InventoryViewModel(store.state.inventory,
+          getInventory: store.dispatch(getInventory(store))),
+      builder: (_, viewModel) => InventoryViewModel(
+        viewModel: viewModel,
+      ),
+      rebuildOnChange: false,
+    );
   }
 }
 
@@ -30,14 +27,14 @@ class InventoryViewModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.all(10),
-      itemCount: viewModel._inventory.length,
+      padding: EdgeInsets.all(5),
+      itemCount: viewModel.inventory.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          padding: EdgeInsets.all(0),
+          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
           height: 100,
           color: ScibbleColor.onlineBlue,
-          child: InventoryListTile(viewModel._inventory[index]),
+          child: InventoryListTile(viewModel.inventory[index]),
         );
       },
     );
@@ -46,7 +43,7 @@ class InventoryViewModel extends StatelessWidget {
 
 class _InventoryViewModel {
   final List<Product> _inventory;
-  List<Product> get inventory => this.inventory;
+  List<Product> get inventory => this._inventory;
 
   void Function() getInventory;
 
@@ -61,9 +58,16 @@ class InventoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading:
-            Image.network("https://online.ntnu.no/api/v1/" + _product.image.sm),
-        title: Text(_product.name),
-        trailing: Text(_product.pk.toString()));
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+      leading: Image.network("https://online.ntnu.no/" + _product.image.sm),
+      title: Text(
+        _product.name,
+        style: TextStyle(color: ScibbleColor.onlineOrange),
+      ),
+      trailing: Text(
+        _product.price.toString() + " kr",
+        style: TextStyle(color: ScibbleColor.onlineOrange),
+      ),
+    );
   }
 }
