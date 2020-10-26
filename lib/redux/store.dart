@@ -18,7 +18,7 @@ class AppState {
 
   factory AppState.initialState(String clientId) => AppState(
       auth: AuthenticationState.initialState(clientId),
-      inventory: null,
+      inventory: [],
       user: null);
 }
 
