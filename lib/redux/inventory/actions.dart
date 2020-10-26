@@ -21,5 +21,7 @@ ThunkAction<AppState> getInventory = (Store<AppState> store) async {
   final List jsonArray = json.decode(response.body);
   final List<Product> inventory =
       jsonArray.map((product) => Product.fromJson(product)).toList();
-  await store.dispatch(SetInventory(inventory));
+  return inventory != store.state.inventory
+      ? store.dispatch(SetInventory(inventory))
+      : inventory;
 };
