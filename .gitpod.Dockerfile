@@ -31,7 +31,7 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
     rm -rf /var/lib/apt/lists/*;
 
 # Install Android SDK
-RUN apt-get install android-sdk
+RUN apt install android-sdk
 
 USER gitpod
 
