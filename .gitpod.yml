@@ -6,6 +6,8 @@ tasks:
   init: >
     flutter upgrade && 
     flutter update-packages --force-upgrade
+    sdkmanager "platforms;android-25" "platform-tools" "build-tools;25.0.3" "system-images;android-25;google_apis;arm64-v8a"
+    yes "" | avdmanager -s create avd --name pixel -k "system-images;android-25;google_apis;arm64-v8a"
 ports:
 - port: 8080
   onOpen: open-preview
