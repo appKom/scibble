@@ -1,5 +1,12 @@
 image:
   file: .gitpod.Dockerfile
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: true
+    addBadge: true
+    addLabel: Open in Gitpod
 tasks:
 - before: >
     source ~/.bashrc
