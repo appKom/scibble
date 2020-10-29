@@ -5,7 +5,7 @@ ENV FLUTTER_HOME=/home/gitpod/flutter
 ENV FLUTTER_VERSION=1.22.2-stable
 # Android
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip"
+ENV ANDROID_HOME /opt/android-sdk-linux
 
 # RUN mkdir Android && \
 #     wget -qO cli.zip https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
@@ -17,6 +17,18 @@ ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-l
 
 # Install dart
 USER root
+
+# RUN apt update -qq && apt install zip unzip
+# Install Android SDK
+RUN cd /opt && \
+    wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+    unzip -q *.zip -d ${ANDROID_HOME} && \
+    rm *.zip
+
+RUN chmod -R 777 ${ANDROID_HOME}
+RUN cd /
+
+RUN apt clean -qq
 
 RUN apt-get update -y
 RUN apt-get install -y gcc make build-essential wget curl unzip apt-utils xz-utils libkrb5-dev gradle libpulse0 android-tools-adb android-tools-fastboot
@@ -30,9 +42,6 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*;
 
-# Install Android SDK
-RUN apt install android-sdk
-
 USER gitpod
 
 # Install Flutter sdk
@@ -40,6 +49,7 @@ RUN cd /home/gitpod && \
   wget -qO flutter_sdk.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz && \
   tar -xvf flutter_sdk.tar.xz && rm flutter_sdk.tar.xz
 
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
 # RUN yes "y" | $FLUTTER_HOME/bin/flutter doctor --android-licenses -v
 
 # Change the PUB_CACHE to /workspace so dependencies are preserved.
