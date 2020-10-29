@@ -18,6 +18,7 @@ RUN cd /opt && \
     rm *.zip
 
 RUN chmod -R 777 ${ANDROID_HOME}
+RUN mkdir ${ANDROID_HOME}/cmdline-tools/latest
 RUN mv ${ANDROID_HOME}/cmdline-tools/ ${ANDROID_HOME}/cmdline-tools/latest/
 RUN cd /
 
