@@ -19,7 +19,11 @@ RUN cd /opt && \
 
 RUN chmod -R 777 ${ANDROID_HOME}
 RUN mkdir ${ANDROID_HOME}/cmdline-tools/latest
-RUN mv ${ANDROID_HOME}/cmdline-tools/ ${ANDROID_HOME}/cmdline-tools/latest/
+# Check if can get extglob
+RUN mv ${ANDROID_HOME}/cmdline-tools/bin ${ANDROID_HOME}/cmdline-tools/latest/bin
+RUN mv ${ANDROID_HOME}/cmdline-tools/lib ${ANDROID_HOME}/cmdline-tools/latest/lib
+RUN mv ${ANDROID_HOME}/cmdline-tools/NOTICE.txt ${ANDROID_HOME}/cmdline-tools/latest/NOTICE.txt
+RUN mv ${ANDROID_HOME}/cmdline-tools/source.properties ${ANDROID_HOME}/cmdline-tools/latest/source.properties
 RUN cd /
 
 RUN apt clean -qq
