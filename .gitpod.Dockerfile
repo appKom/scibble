@@ -5,12 +5,13 @@ ENV FLUTTER_HOME=/home/gitpod/flutter
 ENV FLUTTER_VERSION=1.22.2-stable
 # Android
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-ENV ANDROID_HOME="/home/gitpod/.android"
-ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
-ENV ANDROID_SDK_ARCHIVE="${ANDROID_HOME}/archive"
-ENV ANDROID_STUDIO_PATH="/home/gitpod/"
+ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip"
 
-
+RUN mkdir Android && \
+    wget -qO cli.zip "${ANDROID_SDK_URL}" && \
+    unzip cli.zip && \
+    rm cli.zip && \
+    mv cmdline-tools Android/
 
 # Install dart
 USER root
@@ -28,19 +29,6 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
     rm -rf /var/lib/apt/lists/*;
 
 USER gitpod
-
-RUN cd "${ANDROID_STUDIO_PATH}"
-RUN wget -qO android_studio.zip https://dl.google.com/dl/android/studio/ide-zips/3.3.0.20/android-studio-ide-182.5199772-linux.zip
-RUN unzip android_studio.zip
-RUN rm -f android_studio.zip
-
-RUN mkdir -p "${ANDROID_HOME}"
-RUN touch $ANDROID_HOME/repositories.cfg
-RUN wget -q "${ANDROID_SDK_URL}" -O "${ANDROID_SDK_ARCHIVE}"
-RUN unzip -q -d "${ANDROID_HOME}" "${ANDROID_SDK_ARCHIVE}"
-# RUN echo y | "${ANDROID_HOME}/tools/bin/sdkmanager" "platform-tools" "platforms;android-28" "build-tools;28.0.3"
-RUN yes "y" | "${ANDROID_HOME}/tools/bin/sdkmanager" "platform-tools" "platforms;android-28" "build-tools;28.0.3"
-RUN rm "${ANDROID_SDK_ARCHIVE}"
 
 # Install Flutter sdk
 RUN cd /home/gitpod && \
