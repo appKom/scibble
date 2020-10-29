@@ -24,7 +24,6 @@ RUN mv ${ANDROID_HOME}/cmdline-tools/NOTICE.txt ${ANDROID_HOME}/cmdline-tools/la
 RUN mv ${ANDROID_HOME}/cmdline-tools/source.properties ${ANDROID_HOME}/cmdline-tools/latest/source.properties
 RUN cd /
 ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools:${ANDROID_HOME}/bin:${ANDROID_HOME}/cmdline-tools/latest/bin
-RUN yes | sdkmanager --licenses
 
 RUN apt clean -qq
 
@@ -54,3 +53,4 @@ ENV PUB_CACHE=/workspace/.pub_cache
 
 # add executables to PATH
 RUN echo 'export PATH=${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin:${PUB_CACHE}/bin:${FLUTTER_HOME}/.pub-cache/bin:$PATH' >>~/.bashrc
+RUN yes | sdkmanager --licenses
