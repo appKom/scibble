@@ -7,11 +7,13 @@ ENV FLUTTER_VERSION=1.22.2-stable
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip"
 
-RUN mkdir Android && \
-    wget -qO cli.zip "${ANDROID_SDK_URL}" && \
-    unzip cli.zip && \
-    rm cli.zip && \
-    mv cmdline-tools Android/
+# RUN mkdir Android && \
+#     wget -qO cli.zip https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
+#     unzip cli.zip && \
+#     rm cli.zip && \
+#     mv cmdline-tools Android/
+
+# ENV ANDROID_SDK_ROOT =
 
 # Install dart
 USER root
@@ -27,6 +29,9 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*;
+
+# Install Android SDK
+RUN apt-get install android-sdk
 
 USER gitpod
 
