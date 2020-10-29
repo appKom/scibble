@@ -35,7 +35,7 @@ RUN cd /home/gitpod && \
   wget -qO flutter_sdk.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz && \
   tar -xvf flutter_sdk.tar.xz && rm flutter_sdk.tar.xz
 
-RUN yes "y" | $FLUTTER_HOME/bin/flutter doctor --android-licenses -v
+# RUN yes "y" | $FLUTTER_HOME/bin/flutter doctor --android-licenses -v
 
 # Change the PUB_CACHE to /workspace so dependencies are preserved.
 ENV PUB_CACHE=/workspace/.pub_cache
