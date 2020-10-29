@@ -5,11 +5,11 @@ tasks:
     source ~/.bashrc
   init: >
     flutter upgrade && 
-    flutter update-packages --force-upgrade &&
+    flutter update-packages --force-upgrade
 ports:
 - port: 8080
   onOpen: open-preview
 vscode:
   extensions:
-    - dart-Code.dart-code
+    - dart-code.dart-code
     - dart-code.flutter
