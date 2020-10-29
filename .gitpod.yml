@@ -3,6 +3,7 @@ image:
 tasks:
 - before: >
     source ~/.bashrc
+    docker pull thyrlian/android-sdk
   init: >
     flutter upgrade && 
     flutter update-packages --force-upgrade
