@@ -3,41 +3,25 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scibble/models/auth_pkce.dart';
 import 'package:scibble/models/token.dart';
-import 'package:scibble/models/user.dart';
 import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/authentication/reducer.dart';
 import 'package:scibble/redux/authentication/state.dart';
+import 'package:scibble/redux/user/actions.dart';
 
-import '../../models/token_test.dart';
-import '../../models/user_test.dart';
+import '../models/token_test.dart';
 
 void main() {
   group('Authentication state (Redux)', () {
-    group('User reducer', () {
-      final mockUser = User.fromJson(json.decode(mockJsonUser));
-      test('Test set user', () {
-        final state = UserState(user: null);
-        final newState = userReducer(state, SetUser(mockUser));
-        expect(mockUser, newState.user);
-      });
-      test('Test bad action', () {
-        final state = UserState(user: null);
-        final newState = userReducer(state, SetToken(null));
-        expect(state.user, newState.user);
-      });
-    });
-
     group('Token reducer', () {
       final mockToken = Token.fromJson(json.decode(mockTokenString));
+      final initialState = null;
       test('Test set token', () {
-        final state = TokenState(token: null);
-        final newState = tokenReducer(state, SetToken(mockToken));
-        expect(mockToken, newState.token);
+        final newState = tokenReducer(initialState, SetToken(mockToken));
+        expect(mockToken, newState);
       });
-      test('Test bad action', () {
-        final state = TokenState(token: null);
-        final newState = tokenReducer(state, SetUser(null));
-        expect(state.token, newState.token);
+      test('Test return same state', () {
+        final newState = tokenReducer(initialState, SetUser(null));
+        expect(initialState, newState);
       });
     });
 
@@ -52,6 +36,15 @@ void main() {
         final state = AuthPKCEState(pkce: null);
         final newState = authPKCEReducer(state, SetUser(null));
         expect(state.pkce, newState.pkce);
+      });
+    });
+
+    group('AuthenticationState', () {
+      test('Initialize state', () {
+        AuthenticationState authState =
+            AuthenticationState.initialState('12345');
+        expect(null, isNot(equals(authState.authPKCEState)));
+        expect(null, authState.token);
       });
     });
   });
