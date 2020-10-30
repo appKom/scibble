@@ -5,27 +5,29 @@ ENV FLUTTER_HOME=/home/gitpod/flutter
 ENV FLUTTER_VERSION=1.22.2-stable
 # Android
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-ENV ANDROID_HOME /opt/android-sdk-linux
+ENV ANDROID_HOME=/opt/android-sdk-linux
 
 USER root
 
+# It is commented out due to the fact that virtualization is not functional in Gitpod atm (30.10.20)
 #------------- Install Android and its tools -------------#
-RUN cd /opt && \
-    wget -q https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
-    unzip -q *.zip -d ${ANDROID_HOME} && \
-    rm *.zip
 
-RUN chmod -R 777 ${ANDROID_HOME}
-RUN mkdir ${ANDROID_HOME}/cmdline-tools/latest
-# Check if can get extglob so this can be skipped
-RUN mv ${ANDROID_HOME}/cmdline-tools/bin ${ANDROID_HOME}/cmdline-tools/latest/bin
-RUN mv ${ANDROID_HOME}/cmdline-tools/lib ${ANDROID_HOME}/cmdline-tools/latest/lib
-RUN mv ${ANDROID_HOME}/cmdline-tools/NOTICE.txt ${ANDROID_HOME}/cmdline-tools/latest/NOTICE.txt
-RUN mv ${ANDROID_HOME}/cmdline-tools/source.properties ${ANDROID_HOME}/cmdline-tools/latest/source.properties
-RUN cd /
-ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools:${ANDROID_HOME}/bin:${ANDROID_HOME}/cmdline-tools/latest/bin
+# RUN cd /opt && \
+#     wget -q https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
+#     unzip -q *.zip -d ${ANDROID_HOME} && \
+#     rm *.zip
 
-RUN apt clean -qq
+# RUN chmod -R 777 ${ANDROID_HOME}
+# RUN mkdir ${ANDROID_HOME}/cmdline-tools/latest
+# # Check if can get extglob so this can be skipped
+# RUN mv ${ANDROID_HOME}/cmdline-tools/bin ${ANDROID_HOME}/cmdline-tools/latest/bin
+# RUN mv ${ANDROID_HOME}/cmdline-tools/lib ${ANDROID_HOME}/cmdline-tools/latest/lib
+# RUN mv ${ANDROID_HOME}/cmdline-tools/NOTICE.txt ${ANDROID_HOME}/cmdline-tools/latest/NOTICE.txt
+# RUN mv ${ANDROID_HOME}/cmdline-tools/source.properties ${ANDROID_HOME}/cmdline-tools/latest/source.properties
+# RUN cd /
+# ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools:${ANDROID_HOME}/bin:${ANDROID_HOME}/cmdline-tools/latest/bin
+
+# RUN apt clean -qq
 
 #------------- Install dart -------------#
 
