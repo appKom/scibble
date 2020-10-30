@@ -33,7 +33,7 @@ class ScibbleAppBarViewModel extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(this.title ?? ''),
-      backgroundColor: ScibbleColor.onlineOrange,
+      backgroundColor: ScibbleColor.onlineBlue,
       actions: _vm.isLoggedIn
           ? [IconButton(icon: Icon(Icons.logout), onPressed: _vm.logout)]
           : null,
