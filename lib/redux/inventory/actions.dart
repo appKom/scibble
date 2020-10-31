@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:http/http.dart' as http;
 import 'package:scibble/models/product.dart';
+import 'package:flutter/foundation.dart';
 
 import '../store.dart';
 
@@ -21,7 +22,7 @@ ThunkAction<AppState> getInventory = (Store<AppState> store) async {
   final List jsonArray = json.decode(response.body);
   final List<Product> inventory =
       jsonArray.map((product) => Product.fromJson(product)).toList();
-  return inventory != store.state.inventory
+  return listEquals(inventory, store.state.inventory)
       ? store.dispatch(SetInventory(inventory))
       : inventory;
 };
