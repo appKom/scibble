@@ -10,11 +10,11 @@ class Inventory extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _InventoryViewModel>(
       converter: (store) => _InventoryViewModel(store.state.inventory,
-          getInventory: store.dispatch(getInventory(store))),
+          getInventory: () => Future(store.dispatch(getInventory(store)))),
       builder: (_, viewModel) => InventoryViewModel(
         viewModel: viewModel,
       ),
-      rebuildOnChange: false,
+      onInit: (store) => store.dispatch(getInventory(store)),
     );
   }
 }
@@ -26,18 +26,25 @@ class InventoryViewModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.all(5),
-      itemCount: viewModel.inventory.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-          height: 100,
-          color: ScibbleColor.onlineBlue,
-          child: InventoryListTile(viewModel.inventory[index]),
-        );
-      },
-    );
+    return viewModel.inventory.length > 0
+        ? RefreshIndicator(
+            child: ListView.builder(
+              padding: EdgeInsets.all(5),
+              itemCount: viewModel.inventory.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InventoryListTile(viewModel.inventory[index]);
+              },
+            ),
+            onRefresh: viewModel.getInventory,
+          )
+        : Center(
+            child: Column(children: <Widget>[
+            Text('No products available'),
+            OutlineButton(
+              onPressed: viewModel.getInventory,
+              child: Text("Refresh"),
+            ),
+          ]));
   }
 }
 
@@ -57,17 +64,23 @@ class InventoryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return Card(
+        child: ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       leading: Image.network("https://online.ntnu.no/" + _product.image.sm),
       title: Text(
-        _product.name,
+        _product.name ?? '',
         style: TextStyle(color: ScibbleColor.onlineOrange),
+      ),
+      subtitle: Text(
+        _product.category.name ?? '',
+        style: TextStyle(color: Colors.grey),
       ),
       trailing: Text(
-        _product.price.toString() + " kr",
-        style: TextStyle(color: ScibbleColor.onlineOrange),
+        "id: " + _product.pk.toString(),
+        style: TextStyle(color: Colors.grey),
       ),
-    );
+      tileColor: ScibbleColor.onlineBlue,
+    ));
   }
 }

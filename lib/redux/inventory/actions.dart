@@ -4,7 +4,6 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:http/http.dart' as http;
 import 'package:scibble/models/product.dart';
-import 'package:flutter/foundation.dart';
 
 import '../store.dart';
 
@@ -15,14 +14,13 @@ class SetInventory {
 
 ThunkAction<AppState> getInventory = (Store<AppState> store) async {
   final token = store.state.auth.token;
-  var response = await http.get(
+  http.Response response = await http.get(
     'https://online.ntnu.no/api/v1/inventory/',
     headers: {'Authorization': 'Bearer ${token.accessToken}'},
   );
-  final List jsonArray = json.decode(response.body);
+
+  final List jsonArray = json.decode(Utf8Decoder().convert(response.bodyBytes));
   final List<Product> inventory =
       jsonArray.map((product) => Product.fromJson(product)).toList();
-  return listEquals(inventory, store.state.inventory)
-      ? store.dispatch(SetInventory(inventory))
-      : inventory;
+  return store.dispatch(SetInventory(inventory));
 };
