@@ -14,6 +14,16 @@ class Product {
       this.image,
       this.category});
 
+  Product.copy(Product product) {
+    Map<String, dynamic> json = product.toJson();
+    final copiedProduct = new Product.fromJson(json);
+    pk = copiedProduct.pk;
+    name = copiedProduct.name;
+    description = copiedProduct.description;
+    image = copiedProduct.image;
+    category = copiedProduct.category;
+  }
+
   Product.fromJson(Map<String, dynamic> json) {
     pk = json['pk'];
     name = json['name'];
