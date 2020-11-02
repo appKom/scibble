@@ -38,13 +38,15 @@ class InventoryViewModel extends StatelessWidget {
             onRefresh: viewModel.getInventory,
           )
         : Center(
-            child: Column(children: <Widget>[
-            Text('No products available'),
-            OutlineButton(
-              onPressed: viewModel.getInventory,
-              child: Text("Refresh"),
-            ),
-          ]));
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                Text('No products available'),
+                OutlineButton(
+                  onPressed: viewModel.getInventory,
+                  child: Text("Refresh"),
+                ),
+              ]));
   }
 }
 
