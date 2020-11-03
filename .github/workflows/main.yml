@@ -6,8 +6,6 @@ jobs:
       uses: steebchen/flutter@v1.1.0
       with:
         args: pub get
-    steps:
-      - uses: actions/checkout@v1
 
   run-tests:
     steps:
