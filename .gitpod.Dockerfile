@@ -1,6 +1,6 @@
 FROM gitpod/workspace-full
 
-# FLutter
+# Flutter
 ENV FLUTTER_HOME=/home/gitpod/flutter
 ENV FLUTTER_VERSION=1.22.2-stable
 # Android
