@@ -1,12 +1,12 @@
 name: flutter-actions
 on: [push, pull_request]
 jobs:
-  prepare-flutter:
-    - name: install dependencies
-      uses: steebchen/flutter@v1.1.0
-      with:
-        args: pub get
+  flutter-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
 
-  run-tests:
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - run: flutter pub get
       - run: flutter tests --coverage
