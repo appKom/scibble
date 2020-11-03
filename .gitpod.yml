@@ -12,8 +12,7 @@ tasks:
     source ~/.bashrc
   init: >
     flutter upgrade &&
-    flutter update-packages --force-upgrade &&
-    flutter doctor --android-licenses
+    flutter update-packages --force-upgrade
 vscode:
   extensions:
     - dart-code.dart-code
