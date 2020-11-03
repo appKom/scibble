@@ -1,5 +1,5 @@
 name: flutter-actions
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   flutter-tests:
     name: Run tests
@@ -16,5 +16,11 @@ jobs:
         uses: subosito/flutter-action@v1.4.0
       - name: Install Flutter dependencies
         run: flutter pub get
-      - name: Test code and create
+      - name: Test code
         run: flutter test --coverage
+        uses: devmasx/coverage-check-action@v1.2.0
+        with:
+          type: lcov
+          result_path: coverage/example.lcov
+          min_coverage: 90
+          token: ${{secrets.GITHUB_TOKEN}}
