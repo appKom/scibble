@@ -20,13 +20,11 @@ jobs:
     name: Test project
     runs-on: ubuntu-latest
     steps:
-      - name: Run tests with ocverage
-        run: flutter test --coverage
+        - run: flutter test --coverage
   coverage:
-    name: Test coverage
     runs-on: ubuntu-latest
       steps:
-        uses: devmasx/coverage-check-action@v1.2.0
+        - uses: devmasx/coverage-check-action@v1.2.0
         with:
           type: lcov
           result_path: coverage/lcov.info
