@@ -23,10 +23,10 @@ jobs:
         - run: flutter test --coverage
   coverage:
     runs-on: ubuntu-latest
-      steps:
-        - uses: devmasx/coverage-check-action@v1.2.0
-        with:
-          type: lcov
-          result_path: coverage/lcov.info
-          min_coverage: 90
-          token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: devmasx/coverage-check-action@v1.2.0
+      with:
+        type: lcov
+        result_path: coverage/lcov.info
+        min_coverage: 90
+        token: ${{ secrets.GITHUB_TOKEN }}
