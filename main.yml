@@ -1,2 +1,14 @@
-- name: flutter-cli
-  uses: steebchen/flutter@v1.1.0
+name: flutter-actions
+on: [push, pull_request]
+jobs:
+  prepare-flutter:
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: install dependencies
+        uses: steebchen/flutter@v1.1.0
+        with:
+          args: pub get
+  run-tests:
+    steps:
+      run: flutter tests --coverage
