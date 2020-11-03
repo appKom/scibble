@@ -4,7 +4,6 @@ jobs:
   build:
     name: Build and test project
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,8 +17,12 @@ jobs:
         run: flutter pub get
       - name: Test code
         run: flutter test --coverage
-      - name: Show coverage
-        uses: devmasx/coverage-check-action@v1.2.0
+
+  coverage:
+    name: Show coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: devmasx/coverage-check-action@v1.2.0
         with:
           type: lcov
           result_path: coverage/lcov.info
