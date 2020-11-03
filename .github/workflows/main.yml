@@ -1,5 +1,5 @@
 name: flutter-actions
-on: [pull_request]
+on: [pull_request_target, pull_request]
 jobs:
   flutter-tests:
     name: Run tests
@@ -24,4 +24,4 @@ jobs:
           type: lcov
           result_path: coverage/example.lcov
           min_coverage: 90
-          # token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.GITHUB_TOKEN}}
