@@ -2,7 +2,7 @@ name: flutter-actions
 on: [pull_request_target, pull_request]
 jobs:
   build:
-    name: Build project
+    name: Build and test project
     runs-on: ubuntu-latest
 
     steps:
@@ -16,15 +16,10 @@ jobs:
         uses: subosito/flutter-action@v1.4.0
       - name: Install Flutter dependencies
         run: flutter pub get
-  test:
-    name: Test project
-    runs-on: ubuntu-latest
-    steps:
-      - run: flutter test --coverage
-  coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: devmasx/coverage-check-action@v1.2.0
+      - name: Test code
+        run: flutter test --coverage
+      - name: Show coverage
+        uses: devmasx/coverage-check-action@v1.2.0
         with:
           type: lcov
           result_path: coverage/lcov.info
