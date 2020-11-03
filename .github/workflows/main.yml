@@ -6,18 +6,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Setup project
         uses: actions/checkout@v2
-      - name: Setup Java
         uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - name: Setup Flutter
         uses: subosito/flutter-action@v1.4.0
       - name: Install Flutter dependencies
         run: flutter pub get
       - name: Test code
         run: flutter test --coverage
+      - name: Show coverage
         uses: devmasx/coverage-check-action@v1.2.0
         with:
           type: lcov
