@@ -255,4 +255,4 @@ $RECYCLE.BIN/
 assets/cfg/app_settings.json
 
 # Test files
-# coverage/
+coverage/
