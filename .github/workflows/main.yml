@@ -17,4 +17,4 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
       - name: Test code and create
-        run: flutter tests --coverage
+        run: flutter test --coverage
