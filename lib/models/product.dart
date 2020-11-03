@@ -3,7 +3,7 @@ class Product {
   String name;
   int price;
   String description;
-  Image image;
+  ProductImage image;
   Category category;
 
   Product(
@@ -29,7 +29,8 @@ class Product {
     name = json['name'];
     price = json['price'];
     description = json['description'];
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    image =
+        json['image'] != null ? new ProductImage.fromJson(json['image']) : null;
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;
@@ -51,7 +52,7 @@ class Product {
   }
 }
 
-class Image {
+class ProductImage {
   int id;
   String name;
   String timestamp;
@@ -68,7 +69,7 @@ class Image {
   String preset;
   String presetDisplay;
 
-  Image(
+  ProductImage(
       {this.id,
       this.name,
       this.timestamp,
@@ -85,7 +86,7 @@ class Image {
       this.preset,
       this.presetDisplay});
 
-  Image.fromJson(Map<String, dynamic> json) {
+  ProductImage.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     timestamp = json['timestamp'];
