@@ -253,3 +253,6 @@ $RECYCLE.BIN/
 
 # Config file
 assets/cfg/app_settings.json
+
+# Test files
+# coverage/
