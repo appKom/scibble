@@ -20,13 +20,13 @@ jobs:
     name: Test project
     runs-on: ubuntu-latest
     steps:
-        - run: flutter test --coverage
+      - run: flutter test --coverage
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: devmasx/coverage-check-action@v1.2.0
-      with:
-        type: lcov
-        result_path: coverage/lcov.info
-        min_coverage: 90
-        token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          type: lcov
+          result_path: coverage/lcov.info
+          min_coverage: 90
+          token: ${{ secrets.GITHUB_TOKEN }}
