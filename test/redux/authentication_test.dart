@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:scibble/models/auth_pkce.dart';
 import 'package:scibble/models/token.dart';
 import 'package:scibble/redux/authentication/actions.dart';
@@ -26,23 +27,25 @@ void main() {
     });
 
     group('Authentication with PKCE reducer', () {
+      final initialState = AuthPKCEState(pkce: null);
       final mockAuthPKCE = AuthPKCE("123456789");
       test('Test set auth', () {
-        final state = AuthPKCEState(pkce: null);
-        final newState = authPKCEReducer(state, SetAuthPKCE(mockAuthPKCE));
+        final newState = authPKCEReducer(initialState, SetAuthPKCE(mockAuthPKCE));
         expect(mockAuthPKCE, newState.pkce);
       });
       test('Test bad action', () {
-        final state = AuthPKCEState(pkce: null);
-        final newState = authPKCEReducer(state, SetUser(null));
-        expect(state.pkce, newState.pkce);
+        final newState = authPKCEReducer(initialState, SetUser(null));
+        expect(initialState.pkce, newState.pkce);
+      });
+      test('Test set code', () {
+        final newState = authPKCEReducer(initialState, SetCode("code"));
+        expect("code", newState.code);
       });
     });
 
     group('AuthenticationState', () {
       test('Initialize state', () {
-        AuthenticationState authState =
-            AuthenticationState.initialState('12345');
+        AuthenticationState authState = AuthenticationState.initialState('12345');
         expect(null, isNot(equals(authState.authPKCEState)));
         expect(null, authState.token);
       });

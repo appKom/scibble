@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scibble/models/auth_pkce.dart';
-import 'package:scibble/models/token.dart';
 import 'package:scibble/models/user.dart';
 import 'package:scibble/redux/authentication/actions.dart';
-import 'package:scibble/redux/authentication/reducer.dart';
-import 'package:scibble/redux/authentication/state.dart';
 import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/redux/user/reducer.dart';
 
