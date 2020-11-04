@@ -8,7 +8,6 @@ import 'package:scibble/widgets/scibble_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:scibble/models/auth_pkce.dart';
-import 'package:scibble/theme/scibble_color.dart';
 import 'package:scibble/redux/authentication/actions.dart';
 import 'package:scibble/redux/store.dart';
 
