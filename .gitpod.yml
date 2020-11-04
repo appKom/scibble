@@ -1,0 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: true
+    addBadge: true
+    addLabel: Open in Gitpod
+tasks:
+- before: >
+    source ~/.bashrc
+  init: >
+    flutter upgrade &&
+    flutter update-packages --force-upgrade
+vscode:
+  extensions:
+    - dart-code.dart-code
+    - dart-code.flutter
