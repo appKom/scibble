@@ -12,7 +12,7 @@ import 'package:scibble/redux/user/actions.dart';
 import '../models/token_test.dart';
 
 void main() {
-  group('Authentication state (Redux)', () {
+  group('Authentication Redux', () {
     group('Token reducer', () {
       final mockToken = Token.fromJson(json.decode(mockTokenString));
       final initialState = null;

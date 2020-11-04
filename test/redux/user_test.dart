@@ -9,7 +9,7 @@ import 'package:scibble/redux/user/reducer.dart';
 import '../models/user_test.dart';
 
 void main() {
-  group('User reducer', () {
+  group('User Redux', () {
     final initialState = null;
     final mockUser = User.fromJson(json.decode(mockJsonUser));
     test('Test set user', () {
