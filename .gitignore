@@ -256,4 +256,4 @@ assets/cfg/app_settings.json
 
 # Test files
 coverage/
-test/.test_coverage.dart.
+test/.test_coverage.dart
