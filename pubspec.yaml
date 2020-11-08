@@ -32,6 +32,7 @@ dependencies:
   redux_thunk: ^0.3.0
   redux: ^4.0.0+3
   flutter_redux_navigation: ^0.6.0
+  barcode_scan:
 
 
   # The following adds the Cupertino Icons font to your application.
