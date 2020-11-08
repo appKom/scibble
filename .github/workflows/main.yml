@@ -1,0 +1,32 @@
+name: flutter-actions
+on: [pull_request_target, pull_request]
+jobs:
+  build:
+    name: Build and test project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1.4.0
+      - name: Install Flutter dependencies
+        run: flutter pub get
+      - name: Test code
+        run: flutter test --coverage
+      - name: Show coverage
+        uses: devmasx/coverage-check-action@v1.2.0
+        with:
+          type: lcov
+          result_path: coverage/lcov.info
+          min_coverage: 90
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov.info
