@@ -5,6 +5,8 @@ import 'package:scibble/redux/inventory/actions.dart';
 import 'package:scibble/redux/store.dart';
 import 'package:scibble/theme/scibble_color.dart';
 
+import 'item.dart';
+
 class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,8 @@ class InventoryListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ItemView(product: _product))),
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       leading: Image.network("https://online.ntnu.no/" + _product.image.sm),
       title: Text(

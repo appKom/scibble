@@ -33,14 +33,17 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: _buttonColor,
-      textColor: Colors.white,
-      splashColor: _splashColor,
-      disabledColor: ScibbleColor.onlineBlueDisabled,
-      padding: EdgeInsets.all(15.0),
-      onPressed: onPress,
-      child: child,
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: FlatButton(
+        color: _buttonColor,
+        textColor: Colors.white,
+        splashColor: _splashColor,
+        disabledColor: ScibbleColor.onlineBlueDisabled,
+        padding: EdgeInsets.all(5.0),
+        onPressed: onPress,
+        child: child,
+      ),
     );
   }
 }
