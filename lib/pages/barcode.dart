@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:scibble/theme/scibble_color.dart';
 
 class Barcode extends StatefulWidget {
   @override
@@ -39,22 +40,25 @@ class _ScannerState extends State<Barcode> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Scibble"),
-      ),
-      body: Center(
-        child: Text(
-          result,
-          style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.qr_code_scanner_rounded),
-        label: Text("Scan"),
-        onPressed: _scanBarcode,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+          Text(
+            result,
+            style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+          ),
+          Flexible(
+            child: IconButton(
+              iconSize: 70,
+              color: ScibbleColor.onlineBlue,
+              icon: Icon(
+                Icons.qr_code_scanner_rounded,
+              ),
+              onPressed: _scanBarcode,
+            ),
+          ),
+        ]));
   }
 }
