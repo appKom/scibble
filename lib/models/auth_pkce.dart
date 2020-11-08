@@ -11,6 +11,7 @@ class AuthPKCE {
 
   String get clientId => _clientId;
   String get verifier => _verifier;
+  String get challenge => _challenge;
   String get authenticateUrl => Uri(
         scheme: 'https',
         path: 'online.ntnu.no/openid/authorize',
@@ -27,11 +28,11 @@ class AuthPKCE {
 
   AuthPKCE(this._clientId) {
     _verifier = randomString(128);
-    _challenge = _stringToSha256(_verifier);
+    _challenge = stringToSha256(_verifier);
     _state = randomString(128);
   }
 
-  String _stringToSha256(String string) {
+  static String stringToSha256(String string) {
     var hash = sha256.convert(utf8.encode(string));
     var cleanHash = base64Url
         .encode(hash.bytes)
