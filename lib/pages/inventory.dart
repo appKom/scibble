@@ -72,7 +72,10 @@ class InventoryListTile extends StatelessWidget {
         child: ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       leading: _product.image != null
-          ? Image.network("https://online.ntnu.no/" + _product.image.sm)
+          ? Image.network("https://online.ntnu.no/" + _product.image.xs ??
+              _product.image.sm ??
+              _product.image.md ??
+              _product.image.lg)
           : Icon(
               Icons.inventory,
               color: ScibbleColor.onlineOrange,
