@@ -69,7 +69,9 @@ class InventoryListTile extends StatelessWidget {
     return Card(
         child: ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-      leading: Image.network("https://online.ntnu.no/" + _product.image.sm),
+      leading: _product.image != null
+          ? Image.network("https://online.ntnu.no/" + _product.image.sm)
+          : Icon(Icons.inventory),
       title: Text(
         _product.name ?? '',
         style: TextStyle(color: ScibbleColor.onlineOrange),
