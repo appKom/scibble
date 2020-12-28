@@ -5,6 +5,8 @@ import 'package:scibble/redux/inventory/actions.dart';
 import 'package:scibble/redux/store.dart';
 import 'package:scibble/theme/scibble_color.dart';
 
+import '../theme/scibble_color.dart';
+
 class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,10 @@ class InventoryListTile extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       leading: _product.image != null
           ? Image.network("https://online.ntnu.no/" + _product.image.sm)
-          : Icon(Icons.inventory),
+          : Icon(
+              Icons.inventory,
+              color: ScibbleColor.onlineOrange,
+            ),
       title: Text(
         _product.name ?? '',
         style: TextStyle(color: ScibbleColor.onlineOrange),
