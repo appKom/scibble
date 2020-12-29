@@ -10,7 +10,7 @@ class Barcode extends StatefulWidget {
 }
 
 class _ScannerState extends State<Barcode> {
-  String result = "Varescanner";
+  String result = "";
   Future _scanBarcode() async {
     try {
       ScanResult barcodeResult = await BarcodeScanner.scan();
@@ -46,19 +46,28 @@ class _ScannerState extends State<Barcode> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
           Text(
-            result,
-            style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+            "Varescanner",
+            style: TextStyle(fontSize: 30),
           ),
-          Flexible(
-            child: IconButton(
-              iconSize: 70,
-              color: ScibbleColor.onlineBlue,
-              icon: Icon(
+          Text(
+            result.length != 0 ? result : "1234567890",
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          Column(children: [
+            RawMaterialButton(
+              child: Icon(
                 Icons.qr_code_scanner_rounded,
+                color: ScibbleColor.onlineOrange,
+                size: 70,
               ),
+              padding: EdgeInsets.all(15.0),
+              shape: CircleBorder(),
+              fillColor: ScibbleColor.onlineBlue,
+              elevation: 5.0,
               onPressed: _scanBarcode,
             ),
-          ),
+          ]),
         ]));
   }
 }
