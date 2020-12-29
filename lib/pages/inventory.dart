@@ -5,8 +5,6 @@ import 'package:scibble/redux/inventory/actions.dart';
 import 'package:scibble/redux/store.dart';
 import 'package:scibble/theme/scibble_color.dart';
 
-import '../theme/scibble_color.dart';
-
 class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
