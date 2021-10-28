@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scibble/models/token.dart';
+import 'package:scibble/models/authentication/token.dart';
 
 const String mockTokenString =
     '{"access_token":"fake_access_token","refresh_token":"fake_refresh_token","token_type":"code","expires_in":3600,"id_token":"fake_id_token"}';

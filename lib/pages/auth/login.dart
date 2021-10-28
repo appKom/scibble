@@ -1,77 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:scibble/models/token.dart';
+import 'package:scibble/bloc/authentication/authentication_bloc.dart';
 
-import 'package:scibble/redux/store.dart';
-import 'package:scibble/redux/user/actions.dart';
 import 'package:scibble/widgets/online_login_button.dart';
 
-class Login extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authBloc = BlocProvider.of<AuthenticationBloc>(context);
+
+    if (authBloc.state is SomeToken)
+      Future.microtask(() => Navigator.pushNamed(context, '/home'));
+
     return Scaffold(
-      body: StoreConnector<AppState, _LoginViewModel>(
-        converter: (store) => _LoginViewModel(
-          token: store.state.auth.token,
-          code: store.state.auth.authPKCEState.code,
-          getProfile: () {
-            final state = store.state;
-            if (state.auth.token != null && state.user == null) {
-              getUserProfile(store);
-            }
-          },
-          goToLoginView: () =>
-              store.dispatch(NavigateToAction.push('/login/online')),
-        ),
-        onDidChange: (vm) => vm.getProfile(),
-        builder: (_, vm) => LoginViewModel(vm: vm),
-      ),
-    );
-  }
-}
-
-class LoginViewModel extends StatelessWidget {
-  final _LoginViewModel vm;
-  LoginViewModel({Key key, this.vm}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Spacer(flex: 1),
-          Text(
-            'Scibble',
-            style: TextStyle(
-              fontSize: 50,
-              color: Colors.black54,
-              fontWeight: FontWeight.bold,
+      body: Center(
+        child: Column(
+          children: [
+            Spacer(flex: 1),
+            Text(
+              'Scibble',
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.black54,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Spacer(flex: 1),
-          vm.token == null
-              ? LoginButton(
-                  code: vm.code,
-                  goToLoginView: vm.goToLoginView,
-                )
-              : CircularProgressIndicator(),
-          Spacer(flex: 1),
-        ],
+            Spacer(flex: 1),
+            BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+              if (state is SomeToken) {}
+              return (state is SomeToken)
+                  ? CircularProgressIndicator()
+                  : LoginButton(goToLoginView: () {
+                      authBloc.add(MakePreToken());
+                      Navigator.pushNamed(context, '/login/online');
+                    });
+            }),
+            Spacer(flex: 1),
+          ],
+        ),
       ),
     );
   }
-}
-
-class _LoginViewModel {
-  final Token token;
-  final String code;
-  void Function() getProfile;
-  void Function() goToLoginView;
-  _LoginViewModel({
-    this.token,
-    this.code,
-    this.getProfile,
-    this.goToLoginView,
-  });
 }

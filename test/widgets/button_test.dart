@@ -6,7 +6,7 @@ void main() {
   group('Button', () {
     testWidgets('Render test', (WidgetTester tester) async {
       final button = Button(
-        onPress: () => print("pressed"),
+        onPressed: () => print("pressed"),
         child: Text('test button'),
         color: ButtonColor.primary,
       );

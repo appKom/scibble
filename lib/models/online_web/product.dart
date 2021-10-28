@@ -1,10 +1,10 @@
 class Product {
-  int pk;
-  String name;
-  int price;
-  String description;
-  ProductImage image;
-  Category category;
+  int? pk;
+  String? name;
+  int? price;
+  String? description;
+  ProductImage? image;
+  Category? category;
 
   Product(
       {this.pk,
@@ -33,31 +33,31 @@ class Product {
     data['price'] = this.price;
     data['description'] = this.description;
     if (this.image != null) {
-      data['image'] = this.image.toJson();
+      data['image'] = this.image!.toJson();
     }
     if (this.category != null) {
-      data['category'] = this.category.toJson();
+      data['category'] = this.category!.toJson();
     }
     return data;
   }
 }
 
 class ProductImage {
-  int id;
-  String name;
-  String timestamp;
-  String description;
-  String thumb;
-  String original;
-  String wide;
-  String lg;
-  String md;
-  String sm;
-  String xs;
+  int? id;
+  String? name;
+  String? timestamp;
+  String? description;
+  String? thumb;
+  String? original;
+  String? wide;
+  String? lg;
+  String? md;
+  String? sm;
+  String? xs;
   List<String> tags;
-  String photographer;
-  String preset;
-  String presetDisplay;
+  String? photographer;
+  String? preset;
+  String? presetDisplay;
 
   ProductImage(
       {this.id,
@@ -71,12 +71,12 @@ class ProductImage {
       this.md,
       this.sm,
       this.xs,
-      this.tags,
+      this.tags = const [],
       this.photographer,
       this.preset,
       this.presetDisplay});
 
-  ProductImage.fromJson(Map<String, dynamic> json) {
+  ProductImage.fromJson(Map<String, dynamic> json) : tags = const [] {
     id = json['id'];
     name = json['name'];
     timestamp = json['timestamp'];
@@ -88,7 +88,7 @@ class ProductImage {
     md = json['md'];
     sm = json['sm'];
     xs = json['xs'];
-    tags = json['tags'].cast<String>();
+    tags = (json['tags'] as List?)?.cast<String>() ?? const [];
     photographer = json['photographer'];
     preset = json['preset'];
     presetDisplay = json['preset_display'];
@@ -116,10 +116,13 @@ class ProductImage {
 }
 
 class Category {
-  int pk;
-  String name;
+  int? pk;
+  String? name;
 
-  Category({this.pk, this.name});
+  Category({
+    this.pk,
+    this.name,
+  });
 
   Category.fromJson(Map<String, dynamic> json) {
     pk = json['pk'];
