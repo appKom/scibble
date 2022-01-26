@@ -6,6 +6,7 @@ import 'package:scibble/app_router.dart';
 import 'package:scibble/bloc/authentication/authentication_bloc.dart';
 import 'package:scibble/bloc/inventory/inventory_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:scibble/theme/scibble_color.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,7 @@ class Scibble extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         onGenerateRoute: AppRouter.generateRoute,
+        theme: ThemeData(primarySwatch: ScibbleColor.onlineBlueM),
       ),
     );
   }

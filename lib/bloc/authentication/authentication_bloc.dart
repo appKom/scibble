@@ -29,12 +29,17 @@ class AuthenticationBloc
     });
 
     on<MakePreToken>((event, emit) {
+      print('MakePreToken');
       emit(PreToken(this.clientId));
     });
 
     on<GetToken>((event, emit) async {
+      print('GetToken');
+      
       var response = await http.post(
-        Uri.parse('https://online.ntnu.no/openid/token'),
+        //TODO: This was changed during OW cloud migration.
+        //      Might not work in the future.
+        Uri.parse('https://old.online.ntnu.no/openid/token'),
         headers: <String, String>{
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -46,6 +51,8 @@ class AuthenticationBloc
           'code_verifier': event.pkceToken.verifier,
         },
       );
+
+      print('STATUS: ${response.statusCode}');
       if (response.statusCode == 200) {
         Token token = Token.fromJson(json.decode(response.body));
         await prefs.setString('token', json.encode(token));

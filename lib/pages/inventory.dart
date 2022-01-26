@@ -99,13 +99,27 @@ class InventoryImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('https://online.ntnu.no/');
+    print(product.image?.xs);
+    print(product.image?.sm);
+    print(product.image?.md);
+    print(product.image?.lg);
+
+    //TODO: This was changed during OW cloud migration.
+    //      Might not work in the future.
     return product.image != null
-        ? Image.network("https://online.ntnu.no/" +
-            (product.image?.xs ??
-                product.image?.sm ??
-                product.image?.md ??
-                product.image?.lg ??
-                ""))
+        ? Image.network(
+          // product.image?.xs
+            // "https://online.ntnu.no/" +
+                (product.image?.xs ??
+                    product.image?.sm ??
+                    product.image?.md ??
+                    product.image?.lg ??
+                    ""),
+            errorBuilder: (context, a, stack) {
+              return ErrorWidget("Oops");
+            },
+          )
         : Icon(
             Icons.inventory,
             color: ScibbleColor.onlineOrange,
