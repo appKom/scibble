@@ -5,12 +5,16 @@ import 'package:scibble/widgets/button.dart';
 class LoginButton extends StatelessWidget {
   final String? code;
   final void Function()? goToLoginView;
-  LoginButton({Key? key, this.code, this.goToLoginView}) : super(key: key);
+  LoginButton({
+    Key? key,
+    this.code,
+    this.goToLoginView,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Button(
-      onPressed: () => code == null && goToLoginView != null ? goToLoginView!() : null,
+      onPressed: code == null ? goToLoginView : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
