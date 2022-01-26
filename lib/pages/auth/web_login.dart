@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:scibble/app_router.dart';
 import 'package:scibble/bloc/authentication/authentication_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -34,7 +35,7 @@ class _OnlinePageState extends State<OnlineLoginPage> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is SomeToken)
-          Navigator.popAndPushNamed(context, '/home');
+          Navigator.popAndPushNamed(context, Routes.home);
       },
       child: Scaffold(
         appBar: AppBar(title: Text('Logg inn')),

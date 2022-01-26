@@ -48,7 +48,7 @@ class Scibble extends StatelessWidget {
         BlocProvider(create: (_) => InventoryBloc(authBloc))
       ],
       child: MaterialApp(
-        initialRoute: '/',
+        initialRoute: Routes.login,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(primarySwatch: ScibbleColor.onlineBlueM),
       ),

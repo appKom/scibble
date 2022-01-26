@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scibble/app_router.dart';
 import 'package:scibble/bloc/authentication/authentication_bloc.dart';
 
 class LogoutListener extends StatelessWidget {
@@ -14,7 +15,7 @@ class LogoutListener extends StatelessWidget {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is NoToken)
-          Navigator.popAndPushNamed(context, '/');
+          Navigator.popAndPushNamed(context, Routes.login);
       },
       child: child
     );

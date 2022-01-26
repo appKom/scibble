@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scibble/app_router.dart';
 import 'package:scibble/bloc/authentication/authentication_bloc.dart';
 
 import 'package:scibble/widgets/online_login_button.dart';
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
                   ? CircularProgressIndicator()
                   : LoginButton(goToLoginView: () {
                       authBloc.add(MakePreToken());
-                      Navigator.pushNamed(context, '/login/online');
+                      Navigator.pushNamed(context, Routes.webLogin);
                     });
             }),
             Spacer(flex: 1),
