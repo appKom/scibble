@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scibble/widgets/button.dart';
 import 'package:scibble/widgets/online_login_button.dart';
 
 void main() {
@@ -10,8 +9,8 @@ void main() {
       final loginButton = LoginButton(key: buttonKey);
       await tester.pumpWidget(Directionality(textDirection: TextDirection.ltr, child: loginButton));
       final loginText = find.text('Logg inn gjennom Online');
-      final FlatButton button = tester
-          .widget(find.descendant(of: find.byKey(buttonKey), matching: find.byType(FlatButton)));
+      final TextButton button = tester
+          .widget(find.descendant(of: find.byKey(buttonKey), matching: find.byType(TextButton)));
       expect(loginText, findsOneWidget);
       expect(false, button.enabled);
     });
@@ -23,8 +22,8 @@ void main() {
       );
       await tester.pumpWidget(Directionality(textDirection: TextDirection.ltr, child: loginButton));
       final loginText = find.text('Logg inn gjennom Online');
-      final FlatButton button = tester
-          .widget(find.descendant(of: find.byKey(buttonKey), matching: find.byType(FlatButton)));
+      final TextButton button = tester
+          .widget(find.descendant(of: find.byKey(buttonKey), matching: find.byType(TextButton)));
       expect(loginText, findsOneWidget);
       expect(true, button.enabled);
     });

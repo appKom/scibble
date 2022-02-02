@@ -1,36 +1,36 @@
 class User {
-  int id;
-  String firstName;
-  String lastName;
-  String username;
-  String nickname;
-  String ntnuUsername;
-  int year;
-  String email;
-  String onlineMail;
-  String phoneNumber;
-  String address;
-  String website;
-  String github;
-  String linkedin;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? nickname;
+  String? ntnuUsername;
+  int? year;
+  String? email;
+  String? onlineMail;
+  String? phoneNumber;
+  String? address;
+  String? website;
+  String? github;
+  String? linkedin;
   List<Position> positions;
   List<Position> specialPositions;
-  String rfid;
-  int fieldOfStudy;
-  String startedDate;
-  bool compiled;
-  bool infomail;
-  bool jobmail;
-  String zipCode;
-  String allergies;
-  bool markRulesAccepted;
-  String gender;
-  String bio;
-  int saldo;
-  bool isCommittee;
-  bool isMember;
-  String image;
-  bool hasExpiringMembership;
+  String? rfid;
+  int? fieldOfStudy;
+  String? startedDate;
+  bool? compiled;
+  bool? infomail;
+  bool? jobmail;
+  String? zipCode;
+  String? allergies;
+  bool? markRulesAccepted;
+  String? gender;
+  String? bio;
+  int? saldo;
+  bool? isCommittee;
+  bool? isMember;
+  String? image;
+  bool? hasExpiringMembership;
 
   User(
       {this.id,
@@ -47,8 +47,8 @@ class User {
       this.website,
       this.github,
       this.linkedin,
-      this.positions,
-      this.specialPositions,
+      this.positions = const [],
+      this.specialPositions = const [],
       this.rfid,
       this.fieldOfStudy,
       this.startedDate,
@@ -66,7 +66,9 @@ class User {
       this.image,
       this.hasExpiringMembership});
 
-  User.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json)
+      : positions = [],
+        specialPositions = [] {
     id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -82,13 +84,11 @@ class User {
     github = json['github'];
     linkedin = json['linkedin'];
     if (json['positions'] != null) {
-      positions = new List<Position>();
       json['positions'].forEach((v) {
         positions.add(new Position.fromJson(v));
       });
     }
     if (json['special_positions'] != null) {
-      specialPositions = new List<Position>();
       json['special_positions'].forEach((v) {
         specialPositions.add(new Position.fromJson(v));
       });
@@ -127,13 +127,9 @@ class User {
     data['website'] = this.website;
     data['github'] = this.github;
     data['linkedin'] = this.linkedin;
-    if (this.positions != null) {
-      data['positions'] = this.positions.map((v) => v.toJson()).toList();
-    }
-    if (this.specialPositions != null) {
-      data['special_positions'] =
-          this.specialPositions.map((v) => v.toJson()).toList();
-    }
+    data['positions'] = this.positions.map((v) => v.toJson()).toList();
+    data['special_positions'] =
+        this.specialPositions.map((v) => v.toJson()).toList();
     data['rfid'] = this.rfid;
     data['field_of_study'] = this.fieldOfStudy;
     data['started_date'] = this.startedDate;
@@ -155,12 +151,12 @@ class User {
 }
 
 class Position {
-  int id;
-  String committee;
-  String position;
-  String period;
-  String periodStart;
-  String periodEnd;
+  int? id;
+  String? committee;
+  String? position;
+  String? period;
+  String? periodStart;
+  String? periodEnd;
 
   Position(
       {this.id,
