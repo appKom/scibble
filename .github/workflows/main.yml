@@ -17,6 +17,8 @@ jobs:
         uses: subosito/flutter-action@v2
       - name: Install Flutter dependencies
         run: flutter pub get
+      - name: Add secrets to .env
+        run: echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" > .env
       - name: Test code
         run: flutter test --coverage
       - name: Show coverage
